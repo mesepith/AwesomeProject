@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, ActivityIndicator, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { securedApiCall } from '../services/ApiService';
+import { removeToken } from '../utils/TokenService'; // Adjust the path as necessary
+
 
 const HomeScreen = ({ route, navigation }) => {
   const { userName } = route.params;
@@ -25,7 +26,7 @@ const HomeScreen = ({ route, navigation }) => {
   }, []);
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('userToken'); // Clear the stored JWT
+    await removeToken(); // Clear the stored JWT using TokenService
     navigation.replace('LoginScreen'); // Navigate to the login screen
   };
 
@@ -35,7 +36,7 @@ const HomeScreen = ({ route, navigation }) => {
       {loading ? (
         <ActivityIndicator size="large" />
       ) : (
-        <Text style={styles.protectedDataText}>Protected Data: {JSON.stringify(protectedData)}</Text>
+        <Text style={styles.protectedDataText}>Protected Dataz: {JSON.stringify(protectedData)}</Text>
       )}
       {/* <Button title="Logout" onPress={() => navigation.navigate('LoginScreen')} /> */}
       <Button title="Logout" onPress={handleLogout} />
